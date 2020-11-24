@@ -16,7 +16,7 @@ import map from '@/assets/json/map.json'
 import * as d3 from "d3";
 
 export default {
-  props:["time","weatherElement","mapMode","iconPoint","pathMode"],
+  props:["map","time","weatherElement","mapMode","iconPoint","pathMode"],
   data() {
     return {
       jsonData:map,
@@ -24,6 +24,10 @@ export default {
     }
   },
   watch: {
+    map() {
+      this.clearSVG()
+      this.initSVG()
+    },
     time() {
       this.clearSVG()
       this.initSVG()
@@ -46,23 +50,18 @@ export default {
         .projection(projection);
       var u = d3.select('.svg g')
         .selectAll('path')
-        .data(this.jsonData.features);
+        .data(this.map.features);
       u.enter()
         .append('path')
         .attr('d', geoGenerator)
         .attr('fill', function(e) {
-          return that.getColor(e)
+          //return that.getColor(e)
+          return e.properties.color
         })
         .attr('stroke', '#fff')
         .attr('stroke-width', 2)
         .on("click", function(e,data) {
-          console.log(data)
-          d3.select(this).attr('fill', "rgba(255,255,255,0.5)")
-          if(that.lastChange) {
-            d3.select(that.lastChange.dom).attr('fill', that.lastChange.color)
-            that.lastChange={dom:this,color:that.getColor(data)}
-          }
-          that.lastChange={dom:this,color:that.getColor(data)}
+          //console.log(data)
           that.$emit("getFocus",data)
         })
         .on("mouseover", function() {

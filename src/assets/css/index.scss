@@ -153,6 +153,29 @@ html,body {
 .mapModeChange {
   box-shadow: 0 0 10px #fff inset;
   &:hover {
+    box-shadow: 0 0 10px #fff inset !important;
+  }
+}
+
+.routerList {
+  a {
+    text-decoration:none;
+    color:#fff;
+  }
+  .routerListItem {
+    width: 200px;
+    background-color: rgba(255,255,255,0.5);
+    margin: 0 0 20px 0;
+    border-radius: 10px;
     box-shadow: 0 0 10px #fff inset;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 10px #000;
+    text-align: center;
+  }
+  .router-link-exact-active .routerListItem {
+    background-color: rgba(255,255,255,0.9);
   }
 }
