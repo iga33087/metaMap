@@ -129,8 +129,8 @@ export default {
     getColor(x) {
       let arr=this.weatherElement.records.location.filter(res=>res.locationName==x.properties.COUNTYNAME)[0]
       let value=arr.weatherElement[this.mapMode].time[this.time].parameter.parameterName
-      value=value.length==1 ? "0"+value : value
-      let res=this.mapMode==1 ? "rgba(0,0,255,0."+value*10+")" : "rgba(255,0,0,0."+value*10+")"
+      value=0.01*Number(value)
+      let res=this.mapMode==1 ? "rgba(0,0,255,"+value+")" : "rgba(255,0,0,"+value+")"
       return res
     }
   }

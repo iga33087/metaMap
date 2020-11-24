@@ -10,20 +10,21 @@
     </div>
     <div class="homeBox">
       <div class="homeBoxCol">
-        <HomeBoxColItem title="Wx(天氣現象)" :icon="getIcon(Number(weatherElement.records.locations[0].location[getFocusIndex].weatherElement[6].time[time].elementValue[1].value))" :content="weatherElement.records.locations[0].location[getFocusIndex].weatherElement[6].time[time].elementValue[0].value"></HomeBoxColItem>
-        <HomeBoxColItem title="PoP(降雨機率)" :content="weatherElement.records.locations[0].location[getFocusIndex].weatherElement[0].time[time].elementValue[0].value+'%'"></HomeBoxColItem>
-        <HomeBoxColItem title="平均濕度" :content="weatherElement.records.locations[0].location[getFocusIndex].weatherElement[2].time[time].elementValue[0].value+'%'"></HomeBoxColItem>
-        <HomeBoxColItem title="MinT(最低溫度)" :content="weatherElement.records.locations[0].location[getFocusIndex].weatherElement[8].time[time].elementValue[0].value+'°C'"></HomeBoxColItem>
-        <HomeBoxColItem title="MaxT(最高溫度)" :content="weatherElement.records.locations[0].location[getFocusIndex].weatherElement[12].time[time].elementValue[0].value+'°C'"></HomeBoxColItem>
+        <HomeBoxColItem title="Wx(天氣現象)" :icon="getIcon(Number(weatherElement.records.locations[0].location[getWeatherIndex].weatherElement[6].time[time].elementValue[1].value))" :content="weatherElement.records.locations[0].location[getWeatherIndex].weatherElement[6].time[time].elementValue[0].value"></HomeBoxColItem>
+        <HomeBoxColItem title="PoP(降雨機率)" :content="weatherElement.records.locations[0].location[getWeatherIndex].weatherElement[0].time[time].elementValue[0].value+'%'"></HomeBoxColItem>
+        <HomeBoxColItem title="平均濕度" :content="weatherElement.records.locations[0].location[getWeatherIndex].weatherElement[2].time[time].elementValue[0].value+'%'"></HomeBoxColItem>
+        <HomeBoxColItem title="紫外線指數" :content="weatherElement.records.locations[0].location[getWeatherIndex].weatherElement[9].time[time] ? weatherElement.records.locations[0].location[getWeatherIndex].weatherElement[9].time[time].elementValue[1].value : ''"></HomeBoxColItem>
+        <HomeBoxColItem title="MinT(最低溫度)" :content="weatherElement.records.locations[0].location[getWeatherIndex].weatherElement[8].time[time].elementValue[0].value+'°C'"></HomeBoxColItem>
+        <HomeBoxColItem title="MaxT(最高溫度)" :content="weatherElement.records.locations[0].location[getWeatherIndex].weatherElement[12].time[time].elementValue[0].value+'°C'"></HomeBoxColItem>
       </div>
       <Map :map="mapAndColor" pathMode="week" :time="time" :mapMode="mapMode" :weatherElement="weatherElement" :iconPoint="iconPointAndIcon" @getFocus="getFocus">
         <div class="mapMode">
-          <div class="mapModeItem" :class="{'mapModeChange':mapMode==0}" @click="mapMode=0">降雨機率</div>
-          <div class="mapModeItem" :class="{'mapModeChange':mapMode==8}" @click="mapMode=8">最低溫度</div>
-          <div class="mapModeItem" :class="{'mapModeChange':mapMode==4}" @click="mapMode=12">最高溫度</div>
-          <div class="mapModeItem" :class="{'mapModeChange':mapMode==1}" @click="mapMode=1">平均溫度</div>
-          <div class="mapModeItem" :class="{'mapModeChange':mapMode==2}" @click="mapMode=2">平均濕度</div>
-          <div class="mapModeItem" :class="{'mapModeChange':mapMode==9}" @click="mapMode=9">紫外線指數</div>
+          <div class="mapModeItem" :class="{'mapModeChange':mapMode==0}" @click="changeMapMode(0)">降雨機率</div>
+          <div class="mapModeItem" :class="{'mapModeChange':mapMode==8}" @click="changeMapMode(8)">最低溫度</div>
+          <div class="mapModeItem" :class="{'mapModeChange':mapMode==4}" @click="changeMapMode(12)">最高溫度</div>
+          <div class="mapModeItem" :class="{'mapModeChange':mapMode==1}" @click="changeMapMode(1)">平均溫度</div>
+          <div class="mapModeItem" :class="{'mapModeChange':mapMode==2}" @click="changeMapMode(2)">平均濕度</div>
+          <div class="mapModeItem" :class="{'mapModeChange':mapMode==9}" @click="changeMapMode(9)">紫外線指數</div>
         </div>
         <div class="country">{{focusAear.properties&&focusAear.properties.COUNTYNAME ? focusAear.properties.COUNTYNAME : ''}}</div>
       </Map>
@@ -52,7 +53,7 @@ export default {
       time:0,
       mapMode:0,
       weatherElement:"",
-      focusAear:"",
+      focusAear:map.features[6],
       iconPoint:iconPoint
     }
   },
@@ -131,9 +132,15 @@ export default {
     getColor(x) {
       let arr=this.weatherElement.records.locations[0].location.filter(res=>res.locationName==x.properties.COUNTYNAME)[0]
       let value=arr.weatherElement[this.mapMode].time[this.time].elementValue[0].value
-      value=value.length==1 ? "0"+value : value
-      let res=this.mapMode==0 ? "rgba(0,0,255,0."+value*10+")" : "rgba(255,0,0,0."+value*10+")"
+      value=this.mapMode==9 ? 0.1*Number(value) : 0.01*Number(value)
+      let res=this.mapMode==0 ? "rgba(0,0,255,"+value+")" : this.mapMode==9 ? "rgba(112,0,209,"+value+")" : "rgba(255,0,0,"+value+")"
       return res
+    },
+    changeMapMode(x) {
+      this.mapMode=x
+      if(this.time>this.timeList.length-1) {
+        this.time=this.timeList.length-1
+      }
     }
   }
   
