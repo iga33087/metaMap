@@ -133,7 +133,7 @@ export default {
       let arr=this.weatherElement.records.locations[0].location.filter(res=>res.locationName==x.properties.COUNTYNAME)[0]
       let value=arr.weatherElement[this.mapMode].time[this.time].elementValue[0].value
       value=this.mapMode==9 ? 0.1*Number(value) : 0.01*Number(value)
-      let res=this.mapMode==0 ? "rgba(0,0,255,"+value+")" : this.mapMode==9 ? "rgba(112,0,209,"+value+")" : "rgba(255,0,0,"+value+")"
+      let res=this.mapMode==0||this.mapMode==2 ? "rgba(0,0,255,"+value+")" : this.mapMode==9 ? "rgba(112,0,209,"+value+")" : "rgba(255,0,0,"+value+")"
       return res
     },
     changeMapMode(x) {
