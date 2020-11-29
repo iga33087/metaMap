@@ -102,12 +102,12 @@ export default {
   },
   async created() {
     this.weatherElement=await this.$api.FC0032001()
-    console.log(this.mapAndColor)
+    //console.log(this.mapAndColor)
   },
   methods: {
     getFocus(e) {
       this.focusAear=e
-      console.log(this.focusAear)
+      //console.log(this.focusAear)
       //console.log(this.weatherElement.records.location[this.getFocusIndex])
     },
     getIcon(x) {
