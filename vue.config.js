@@ -1,3 +1,4 @@
 module.exports = {
-  publicPath: '/metaMap/'
+  publicPath: '/metaMap/',
+  transpileDependencies:  ['*'],
 }
