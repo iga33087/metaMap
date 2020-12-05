@@ -21,7 +21,7 @@
         <div class="mapMode">
           <div class="mapModeItem" :class="{'mapModeChange':mapMode==0}" @click="changeMapMode(0)">降雨機率</div>
           <div class="mapModeItem" :class="{'mapModeChange':mapMode==8}" @click="changeMapMode(8)">最低溫度</div>
-          <div class="mapModeItem" :class="{'mapModeChange':mapMode==4}" @click="changeMapMode(12)">最高溫度</div>
+          <div class="mapModeItem" :class="{'mapModeChange':mapMode==12}" @click="changeMapMode(12)">最高溫度</div>
           <div class="mapModeItem" :class="{'mapModeChange':mapMode==1}" @click="changeMapMode(1)">平均溫度</div>
           <div class="mapModeItem" :class="{'mapModeChange':mapMode==2}" @click="changeMapMode(2)">平均濕度</div>
           <div class="mapModeItem" :class="{'mapModeChange':mapMode==9}" @click="changeMapMode(9)">紫外線指數</div>
@@ -29,7 +29,7 @@
         <div class="country">{{focusAear.properties&&focusAear.properties.COUNTYNAME ? focusAear.properties.COUNTYNAME : ''}}</div>
       </Map>
       <div class="homeBoxCol">
-        <RouterList></RouterList>
+        <LineBarChart :weatherElement="weatherElement" :mapMode="mapMode" :time="time"/>
       </div>
     </div>
   </div>
@@ -39,14 +39,14 @@
 import Map from '@/components/Map'
 import Timer from '@/components/Timer'
 import HomeBoxColItem from '@/components/HomeBoxColItem'
-import RouterList from '@/components/RouterList'
+import LineBarChart from '@/components/LineBarChart'
 import iconPoint from '@/assets/json/iconPoint.json'
 import map from '@/assets/json/map.json'
 
 export default {
   name: 'Home',
   components: {
-    Map,Timer,HomeBoxColItem,RouterList
+    Map,Timer,HomeBoxColItem,LineBarChart
   },
   data() {
     return {
