@@ -3,8 +3,6 @@ $color1:#7DB9DE;
 $xs: 375px;
 $sm: 575.98px;
 $md: 1200px;
-$lg: 991.98px;
-$xl: 1200px;
 
 @mixin rwd($breakpoint) {
   @media (max-width: $breakpoint) {
@@ -53,8 +51,7 @@ html,body {
 
 .content {
   height: 100%;
-  display: flex;
-  align-items: center;
+  display: block;
 }
 
 .timer {
