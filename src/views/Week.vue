@@ -106,7 +106,9 @@ export default {
     }
   },
   async created() {
+    this.$store.dispatch("loading",true)
     this.weatherElement=await this.$api.FD0047091()
+    this.$store.dispatch("loading",false)
   },
   methods: {
     getFocus(e) {

@@ -101,7 +101,9 @@ export default {
     }
   },
   async created() {
+    this.$store.dispatch("loading",true)
     this.weatherElement=await this.$api.FC0032001()
+    this.$store.dispatch("loading",false)
     //console.log(this.mapAndColor)
   },
   methods: {

@@ -61,7 +61,7 @@ export default {
         .attr('stroke', '#fff')
         .attr('stroke-width', 2)
         .on("click", function(e,data) {
-          //console.log(data)
+          console.log("data",data)
           that.$emit("getFocus",data)
         })
         .on("mouseover", function() {
